@@ -17,10 +17,20 @@
 
 
 // function prototypes
+void makeMove();
+void displayBoard();
+void resetBoard();
+void player1Move();
+void player2Move(); // this function is for the user 2, other end user
+int checkWinner(); 
+int isFull();
 
 
 // global variables
-
+char board[3][3];
+char winner;
+const char O = 'O';
+const char X ='X';
 
 int main()
 {
