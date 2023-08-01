@@ -100,3 +100,95 @@ void resetBoard()
         }
     }
 }
+
+
+int isFull()
+{
+    
+    for(int i = 0; i < 3; ++i)
+    {
+        for(int j = 0; j<3;++j)
+        {
+            if(board[i][j] == ' ')
+            {
+                // if encounter any open spot, then it not full
+                return 0; 
+            }
+        }
+    }
+
+    return 1; 
+}
+
+
+int checkWinner()
+{
+    // initially 0 = progressing
+    int result = 0; 
+    int check; 
+
+    if((board[0][0] == board[0][1]) && (board[0][1] == board[0][2]) && board[0][0] != ' ') 
+    {
+        // Column check start
+        winner = board[0][0]; // store winning character 
+        return 1;
+    }
+    else if((board[1][0] == board[1][1]) && (board[1][1] == board[1][2]) && board[1][0] != ' ') 
+    {
+        winner = board[1][0];
+        return 1;    
+    }
+    else if((board[2][0] == board[2][1]) && (board[2][1] == board[2][2]) && board[2][0] != ' ')
+    {
+        winner = board[2][0];
+        return 1; 
+    } 
+    else if((board[0][0] == board[1][0]) && (board[1][0] == board[2][0]) && board[0][0] != ' ')
+    {
+        // ROW check start
+        winner = board[0][0];
+        return 1; 
+    }
+    else if((board[0][1] == board[1][1]) && (board[1][1] == board[2][1]) && board[0][1] != ' ')
+    {
+        winner = board[0][1];
+        return 1; 
+    }
+    else if((board[0][2] == board[1][2]) && (board[1][2] == board[2][2]) && board[0][2] != ' ')
+    {
+        winner = board[0][2];
+        return 1; 
+    }
+    else if((board[0][0] == board[1][1]) && (board[1][1] == board[2][2]) && board[0][0] != ' ')
+    {
+        // diagnal check start
+        winner = board[0][0];
+        return 1; 
+    }
+    else if((board[0][2] == board[1][1]) && (board[1][1] == board[2][0]) && board[0][2] != ' ')
+    {
+        winner = board[0][2];
+        return 1; 
+    }
+    else
+    {
+        check = isFull(); 
+
+        //enter here if no match found
+        if(check == 1)
+        {
+            //enter here when board is full, but no matching winner found
+            return -1; // tie
+        }
+        else
+        {
+            return 0; //still progressing
+        }
+
+    }
+
+    return result;
+    
+
+
+}
