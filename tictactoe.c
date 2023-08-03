@@ -26,8 +26,14 @@ void displayBoard();
 void resetBoard();
 void player1Move();
 void player2Move(); // this function is for the user 2, other end user
+void displayResult(int status);
+
 int checkWinner(); 
 int isFull();
+int mode1(); 
+int mode2();
+int mode3();
+
 
 
 // global variables
@@ -43,8 +49,7 @@ int main()
     srand(time(0));
 
     //variables
-    int keepPlay = 0; // 0 = stop, 1 = continue
-
+    int keepPlay = 1; // 0 = stop, 1 = continue
 
     /*
         Outer do-while loop with listing menu
@@ -52,6 +57,7 @@ int main()
 
     */
 
+    //game loadimg (use of delauy, 1 sec = 1000 ms)
     printf("Welcome to the Tic-Tac-Toe!\n");
     for (int i = 0; i < 3; i++)
     {
@@ -61,22 +67,54 @@ int main()
     printf("\n");
 
 
+
+    // Main game starts here
     do{
         // Every enter here is new start
-        int status = 0; // track the game status
-        int 
+        int status = 0; // 1=user1 win, 2=user2 win, 3=tie
+        int choice;
 
-        do{
+        // menu
+        printf("1) You vs Computer\n");
+        printf("2) You vs Player2\n");
+        printf("3) You vs Player3 (Other device)\n");
+        printf("4) Quit\n");
+        scanf("%d", &choice);
 
+        if(choice == 1)
+        {
+            status = mode1();
+            displayResult(status);
+        }
+        else if(choice == 2)
+        {
+            status = mode2()
+            displayResult(status);
+        }
+        else if(choice == 3)
+        {
+            status = mode3();
+            displayResult(status)
+        }
+        else if(choice == 4)
+        {
+            keepPlay = 0;
+
+        }
+        else
+        {
+            printf("Invaild input... \nEnter a valid input\n");
+            keepPlay = 1;
         }
 
     } while (keepPlay == 1);
 
 
-
+    Printf("Thanks for playing...\n");
 
     return 0;
 }
+
 
 
 void displayBoard()
@@ -98,6 +136,22 @@ void resetBoard()
         {
             board[i][j] = ' ';
         }
+    }
+}
+
+void displayResult(int status)
+{
+    if(status == 1)
+    {
+        printf("CONGRATS YOU WON!!!!\n");
+    }
+    else if(status == 2)
+    {
+        printf("OOPS, Other player win... Try next time!\n");
+    }
+    else if(status == 3)
+    {
+        printf("It's a TIE!\n");
     }
 }
 
