@@ -45,9 +45,6 @@ const char X ='X';
 int main()
 {
 
-    // SEED RNG
-    srand(time(0));
-
     //variables
     int keepPlay = 1; // 0 = stop, 1 = continue
 
@@ -113,6 +110,22 @@ int main()
     Printf("Thanks for playing...\n");
 
     return 0;
+}
+
+int mode1()
+{
+    // SEED RNG
+    srand(time(0));
+
+    int counter = 2; 
+    int turn = 0;
+    int winner;
+
+    do{
+
+        
+    }
+    
 }
 
 
