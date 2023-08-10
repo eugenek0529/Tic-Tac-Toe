@@ -37,7 +37,7 @@ int mode3();
 
 // global variables
 char board[3][3];
-char winner;
+//char winner;
 const char O = 'O';
 const char X ='X';
 
@@ -69,7 +69,7 @@ int main()
     // Main game starts here
     do{
         // Every enter here is new start
-        int status = 0; // 1=user1 win, 2=user2 win, 3=tie
+        int status = 0; // 0=noWinner 1=user1 win, 2=user2 win, 3=tie
         int choice;
 
         // menu
