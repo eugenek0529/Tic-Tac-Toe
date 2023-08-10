@@ -21,7 +21,6 @@
 
 
 // function prototypes
-void makeMove();
 void displayBoard();
 void resetBoard();
 void player1Move();
@@ -41,6 +40,8 @@ char board[3][3];
 char winner;
 const char O = 'O';
 const char X ='X';
+
+
 
 int main()
 {
