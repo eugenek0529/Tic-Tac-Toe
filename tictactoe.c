@@ -58,12 +58,20 @@ int main()
     }
     printf("\n");
 
-
+    printf("How the board is lay out\n");
+    printf("+-----------+\n");
+    printf("| 7 | 8 | 9 |\n");
+    printf("+-----------+\n");
+    printf("| 4 | 5 | 6 |\n");
+    printf("+-----------+\n");
+    printf("| 1 | 2 | 3 |\n");
+    printf("+-----------+\n");
 
     // Main game starts here
     do{
         // Every enter here is new start
-        int status = 0; // 0=noWinner 1=user1 win, 2=user2 win, 3=tie
+        resetBoard();
+        winner = ' ';
         int choice = 0;
 
         // menu
@@ -108,15 +116,43 @@ int main()
 void player1Move()
 {
     int input;
+    int validate = 0;
     printf("Player1's choice: ");
-    scanf("%d",&input);
+    do{
+        scanf("%d",&input)
+        if((input > 0) && (input < 10))
+        {
+            // validated
+            board[input] = 'X';
+            validate=1;
+        }
+        else
+        {
+            printf("Please enter correct input...\n");
+            validate =0;
+        }
+    } while(validate == 0);
 
+}
+
+void comptuerMove()
+{
+    int input;
+    int validate = 0;
+    do{
+        input = rand() % 9;
+        if(board[input] == ' ')
+        {
+            board[input] = 'O';
+            validate = 1;
+        } 
+    }while(validate == 0); 
 }
 
 int mode1()
 {
     // SEED RNG
-    srand(time(0));
+    srand(time(NULL));
 
     int counter = 0; 
     int turn = 0;
@@ -165,18 +201,19 @@ void resetBoard()
 
 void displayResult(int status)
 {
-    if(status == 1)
-    {
-        printf("CONGRATS YOU WON!!!!\n");
-    }
-    else if(status == 2)
-    {
-        printf("OOPS, Other player win... Try next time!\n");
-    }
-    else if(status == 3)
+    if(status == -1)
     {
         printf("It's a TIE!\n");
     }
+    else if(winner == 'X')
+    {
+        prinft("Congrats! You WON the game!\n");
+    }
+    else
+    {
+        printf("Ohter player won...\n");
+    }
+
 }
 
 
