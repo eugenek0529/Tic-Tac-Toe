@@ -25,6 +25,7 @@ void displayBoard();
 void resetBoard();
 void player1Move();
 void player2Move(); // this function is for the user 2, other end user
+void comptuerMove();
 void displayResult(int status);
 
 int checkWinner(); 
@@ -36,7 +37,7 @@ int mode3();
 
 
 // global variables
-char board[3][3];
+char board[9];
 //char winner;
 const char O = 'O';
 const char X ='X';
@@ -49,18 +50,11 @@ int main()
     //variables
     int keepPlay = 1; // 0 = stop, 1 = continue
 
-    /*
-        Outer do-while loop with listing menu
-        inner do-while loop is continuous game play until other mode or exit
 
-    */
-
-    //game loadimg (use of delauy, 1 sec = 1000 ms)
     printf("Welcome to the Tic-Tac-Toe!\n");
     for (int i = 0; i < 3; i++)
     {
         printf(".");
-        delay(1000);
     }
     printf("\n");
 
@@ -70,9 +64,10 @@ int main()
     do{
         // Every enter here is new start
         int status = 0; // 0=noWinner 1=user1 win, 2=user2 win, 3=tie
-        int choice;
+        int choice = 0;
 
         // menu
+        printf("\n\n\n This is start of a new game!\n");
         printf("1) You vs Computer\n");
         printf("2) You vs Player2\n");
         printf("3) You vs Player3 (Other device)\n");
@@ -81,18 +76,15 @@ int main()
 
         if(choice == 1)
         {
-            status = mode1();
-            displayResult(status);
+            keepPlayer = mode1();
         }
         else if(choice == 2)
         {
-            status = mode2()
-            displayResult(status);
+            keepPlay = mode2();
         }
         else if(choice == 3)
         {
-            status = mode3();
-            displayResult(status)
+            keepPlay = mode3();
         }
         else if(choice == 4)
         {
@@ -108,9 +100,17 @@ int main()
     } while (keepPlay == 1);
 
 
-    Printf("Thanks for playing...\n");
+    printf("Thanks for playing...\n");
 
     return 0;
+}
+
+void player1Move()
+{
+    int input;
+    printf("Player1's choice: ");
+    scanf("%d",&input);
+
 }
 
 int mode1()
@@ -118,14 +118,27 @@ int mode1()
     // SEED RNG
     srand(time(0));
 
-    int counter = 2; 
+    int counter = 0; 
     int turn = 0;
-    int winner;
+    int haveWinner=0;
 
-    do{
-
-        
+    while(haveWinner==0)
+    {
+        if(counter == 0)
+        {
+            player1Move();
+        }
+        else
+        {
+            comptuerMove();
+        }
+        displayBoard();
+        haveWinner = checkWinner();
+        counter == counter % 2;
     }
+    displayResult(haveWinner);
+
+    return 1;
     
 }
 
@@ -134,22 +147,19 @@ int mode1()
 void displayBoard()
 {
     printf("+-----------+\n");
-    printf("| %c | %c | %c |\n", board[0][0],board[0][1],board[0][2]);
+    printf("| %c | %c | %c |\n", board[6],board[7],board[8]);
     printf("+-----------+\n");
-    printf("| %c | %c | %c |\n", board[1][0],board[1][1],board[1][2]);
+    printf("| %c | %c | %c |\n", board[3],board[4],board[5]);
     printf("+-----------+\n");
-    printf("| %c | %c | %c |\n", board[2][0],board[2][1],board[2][2]);
+    printf("| %c | %c | %c |\n", board[0],board[1],board[2]);
     printf("+-----------+\n");
 }
 
 void resetBoard()
 {
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < 9; i++)
     {
-        for(int j = 0; j < 3; ++j)
-        {
-            board[i][j] = ' ';
-        }
+        board[i] = ' ';
     }
 }
 
@@ -173,15 +183,12 @@ void displayResult(int status)
 int isFull()
 {
     
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < 9; i++)
     {
-        for(int j = 0; j<3;++j)
+        if(board[i] == ' ')
         {
-            if(board[i][j] == ' ')
-            {
-                // if encounter any open spot, then it not full
-                return 0; 
-            }
+            // if any of the spot in board has whitespace, it is not full
+            return 0;
         }
     }
 
