@@ -25,6 +25,7 @@ void displayBoard();
 void resetBoard();
 void player1Move();
 void player2Move(); // this function is for the user 2, other end user
+void mqttPlayerMove();
 void comptuerMove();
 void displayResult(int status);
 
@@ -75,7 +76,7 @@ int main()
         int choice = 0;
 
         // menu
-        printf("\n\n\n This is start of a new game!\n");
+        printf("\n\n\nThis is start of a new game!\n");
         printf("1) You vs Computer\n");
         printf("2) You vs Player2\n");
         printf("3) You vs Player3 (Other device)\n");
@@ -120,10 +121,32 @@ void player1Move()
     printf("Player1's choice: ");
     do{
         scanf("%d",&input);
-        if((input > 0) && (input < 10))
+        if((input > 0) && (input < 10) && (board[input-1] == ' '))
         {
             // validated
             board[input-1] = 'X';
+            validate=1;
+        }
+        else
+        {
+            printf("Please enter correct input...\n");
+            validate =0;
+        }
+    } while(validate == 0);
+
+}
+
+void player2Move()
+{
+    int input;
+    int validate = 0;
+    printf("Player2's choice: ");
+    do{
+        scanf("%d",&input);
+        if((input > 0) && (input < 10) && (board[input-1] == ' '))
+        {
+            // validated
+            board[input-1] = 'O';
             validate=1;
         }
         else
@@ -148,6 +171,7 @@ void comptuerMove()
         } 
     }while(validate == 0); 
 }
+
 
 int mode1()
 {
@@ -182,7 +206,33 @@ int mode1()
 
 int mode2()
 {
+    // SEED RNG
+    srand(time(NULL));
+
+    int counter = 0; 
+    int turn = 0;
+    int haveWinner=0;
+
+    while(haveWinner==0)
+    {
+        counter = counter % 2;
+        if(counter == 0)
+        {
+            player1Move();
+        }
+        else
+        {
+            player2Move();
+        }
+        displayBoard();
+        haveWinner = checkWinner();
+        counter++;
+        
+    }
+    displayResult(haveWinner);
+
     return 1;
+    
 }
 
 int mode3()
@@ -218,11 +268,11 @@ void displayResult(int status)
     }
     else if(winner == 'X')
     {
-        printf("Congrats! You WON the game!\n");
+        printf("Congrats! You WON the game!!!!\n");
     }
     else
     {
-        printf("Ohter player won...\n");
+        printf("Player2 WON!!\n");
     }
 
 }
