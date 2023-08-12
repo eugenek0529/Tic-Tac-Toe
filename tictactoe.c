@@ -38,7 +38,7 @@ int mode3();
 
 // global variables
 char board[9];
-//char winner;
+char winner;
 const char O = 'O';
 const char X ='X';
 
@@ -84,7 +84,7 @@ int main()
 
         if(choice == 1)
         {
-            keepPlayer = mode1();
+            keepPlay = mode1();
         }
         else if(choice == 2)
         {
@@ -119,11 +119,11 @@ void player1Move()
     int validate = 0;
     printf("Player1's choice: ");
     do{
-        scanf("%d",&input)
+        scanf("%d",&input);
         if((input > 0) && (input < 10))
         {
             // validated
-            board[input] = 'X';
+            board[input-1] = 'X';
             validate=1;
         }
         else
@@ -141,7 +141,7 @@ void comptuerMove()
     int validate = 0;
     do{
         input = rand() % 9;
-        if(board[input] == ' ')
+        if(board[input-1] == ' ')
         {
             board[input] = 'O';
             validate = 1;
@@ -160,6 +160,7 @@ int mode1()
 
     while(haveWinner==0)
     {
+        counter = counter % 2;
         if(counter == 0)
         {
             player1Move();
@@ -170,7 +171,8 @@ int mode1()
         }
         displayBoard();
         haveWinner = checkWinner();
-        counter == counter % 2;
+        counter++;
+        
     }
     displayResult(haveWinner);
 
@@ -178,6 +180,15 @@ int mode1()
     
 }
 
+int mode2()
+{
+    return 1;
+}
+
+int mode3()
+{
+    return 1;
+}
 
 
 void displayBoard()
@@ -207,7 +218,7 @@ void displayResult(int status)
     }
     else if(winner == 'X')
     {
-        prinft("Congrats! You WON the game!\n");
+        printf("Congrats! You WON the game!\n");
     }
     else
     {
